@@ -1,13 +1,21 @@
-import { useSelector } from 'react-redux';
-import { StyledWrapper } from './App.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { Notificatio } from './Notificatio/Notificatio';
-import { selectContacts } from 'redux/sliceContacts';
 
+import { selectContacts } from 'redux/sliceContacts';
+import { fetchAllContactsThunk } from 'redux/operations';
+
+import { StyledWrapper } from './App.styled';
 export const App = () => {
   const contacts = useSelector(selectContacts);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllContactsThunk());
+  }, [dispatch]);
   return (
     <StyledWrapper>
       <h1>Phonebook</h1>
