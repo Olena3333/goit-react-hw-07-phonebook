@@ -1,12 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import {
+  addContactThunk,
+  deleteContactThunk,
+  fetchAllContactsThunk,
+} from './operations';
 
 const initialState = {
-  contacts: [
-    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-  ],
+  contacts: [],
+  loading: false,
+  error: null,
 };
 export const sliceContacts = createSlice({
   name: 'contacts',
@@ -21,7 +23,47 @@ export const sliceContacts = createSlice({
       );
     },
   },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchAllContactsThunk.fulfilled, (state, { payload }) => {
+        state.contacts = payload;
+        state.loading = false;
+      })
+      .addCase(addContactThunk.fulfilled, (state, { payload }) => {
+        state.contacts.push(payload);
+        state.loading = false;
+      })
+      .addCase(deleteContactThunk.fulfilled, (state, { payload }) => {
+        state.contacts = state.contacts.filter(item => item.id !== payload.id);
+        state.loading = false;
+      })
+      .addMatcher(
+        isAnyOf(
+          fetchAllContactsThunk.pending,
+          addContactThunk.pending,
+          deleteContactThunk.pending
+        ),
+        (state, { payload }) => {
+          state.loading = true;
+          state.error = null;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchAllContactsThunk.rejected,
+          addContactThunk.rejected,
+          deleteContactThunk.rejected
+        ),
+        (state, { payload }) => {
+          state.loading = false;
+          state.error = payload;
+        }
+      );
+  },
 });
+
 export const contactReducer = sliceContacts.reducer;
 export const { addContact, deleteContact } = sliceContacts.actions;
-export const getContacts = state => state.contacts.contacts;
+export const selectContacts = state => state.contacts.contacts;
+export const selectError = state => state.contacts.error;
+export const selectLoading = state => state.contacts.loading;

@@ -4,10 +4,10 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { Notificatio } from './Notificatio/Notificatio';
-import { getContacts } from 'redux/sliceContacts';
+import { selectContacts } from 'redux/sliceContacts';
 
 export const App = () => {
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   return (
     <StyledWrapper>
       <h1>Phonebook</h1>
