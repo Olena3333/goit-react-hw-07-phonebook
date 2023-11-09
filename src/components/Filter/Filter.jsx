@@ -1,8 +1,10 @@
-import { StyledInput } from 'components/ContactForm/ContactForm.styled';
 import React from 'react';
-import { StyledTitle } from './Filter.style';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { filterContacts, selectFilter } from 'redux/sliseFilter';
+
+import { StyledTitle } from './Filter.style';
+import { StyledInput } from 'components/ContactForm/ContactForm.styled';
 
 export const Filter = () => {
   const dispatch = useDispatch();

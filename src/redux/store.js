@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import { sliceContacts } from './sliceContacts';
 import { sliceFilter } from './sliseFilter';
 

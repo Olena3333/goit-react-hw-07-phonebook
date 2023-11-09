@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { StyledForm, StyledInput } from './ContactForm.styled';
-import { StyledButton } from 'components/App.styled';
+import { toast } from 'react-toastify';
 import { nanoid } from 'nanoid';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact, selectContacts } from 'redux/sliceContacts';
-import { toast } from 'react-toastify';
+
+
+import { StyledForm, StyledInput } from './ContactForm.styled';
+import { StyledButton } from 'components/App.styled';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();

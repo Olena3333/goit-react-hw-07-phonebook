@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import {
   deleteContact,
@@ -9,10 +10,10 @@ import {
 } from 'redux/sliceContacts';
 import { selectFilter } from 'redux/sliseFilter';
 
+import Loader from 'components/Loader/Loader';
+
 import { StyledList } from './ContactList.styled';
 import { StyledButton } from 'components/App.styled';
-import { toast } from 'react-toastify';
-import Loader from 'components/Loader/Loader';
 
 export const ContactList = () => {
   const contacts = useSelector(selectContacts);
