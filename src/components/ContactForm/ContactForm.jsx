@@ -3,11 +3,11 @@ import { toast } from 'react-toastify';
 import { nanoid } from 'nanoid';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, selectContacts } from 'redux/sliceContacts';
-
+import { selectContacts } from 'redux/sliceContacts';
 
 import { StyledForm, StyledInput } from './ContactForm.styled';
 import { StyledButton } from 'components/App.styled';
+import { addContactThunk } from 'redux/operations';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
@@ -40,17 +40,20 @@ export const ContactForm = () => {
     setName('');
     setNumber('');
   };
+
   const handleAddContact = newContact => {
     const isDublicate = contacts.find(
       contact => contact.name === newContact.name
     );
+
     if (isDublicate) {
       toast.warning(`${newContact.name} is already in contacts.`);
     } else {
-      dispatch(addContact(newContact));
+      dispatch(addContactThunk(newContact));
       toast.info(`${newContact.name} add`);
     }
   };
+
   return (
     <StyledForm onSubmit={handelOnSubmit}>
       <label>
