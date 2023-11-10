@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 import {
-  deleteContact,
   selectContacts,
   selectError,
   selectLoading,
@@ -14,6 +13,7 @@ import Loader from 'components/Loader/Loader';
 
 import { StyledList } from './ContactList.styled';
 import { StyledButton } from 'components/App.styled';
+import { deleteContactThunk } from 'redux/operations';
 
 export const ContactList = () => {
   const contacts = useSelector(selectContacts);
@@ -25,7 +25,7 @@ export const ContactList = () => {
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
   const onDeleteContact = id => {
-    dispatch(deleteContact(id));
+    dispatch(deleteContactThunk(id));
   };
   useEffect(() => {
     if (error) {
